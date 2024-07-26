@@ -1,4 +1,4 @@
-from flask import request
+from flask import request, jsonify
 from flask_restful import Resource
 from ..Components.comment_component import CommentComponent
 from ..Model.Request.comment_request import CommentRequest
@@ -13,15 +13,16 @@ class CommentListService(Resource):
             resultado = CommentComponent.getAllComments()
 
             if resultado['result']:
-                if resultado['data'].__len__() > 0:
-                    return response_success(resultado['data'])
+                if len(resultado['data']) > 0:
+                    return jsonify(response_success(resultado['data']))
                 else:
-                    return response_not_found()
+                    return jsonify(response_not_found())
             else:
-                return response_error(resultado['message'])
+                return jsonify(response_error(resultado['message']))
         except Exception as err:
             HandleLogs.write_error(err)
-            return response_error("Error en el método: " + err.__str__())
+            return jsonify(response_error("Error en el método: " + str(err)))
+
 
 class CommentCreateService(Resource):
     @staticmethod
