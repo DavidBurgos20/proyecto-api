@@ -30,6 +30,23 @@ class UserListService(Resource):
             HandleLogs.write_error(err)
             return response_error("Error en el método: " + err.__str__())
 
+class UserDetailService(Resource):
+    @staticmethod
+    def get(user_id):
+        try:
+            HandleLogs.write_log("Ejecutando servicio de obtener usuario por ID")
+            resultado = UserComponent.getUserById(user_id)
+
+            if resultado['result']:
+                if resultado['data']:
+                    return jsonify(response_success(resultado['data']))
+                else:
+                    return jsonify(response_not_found())
+            else:
+                return jsonify(response_error(resultado['message']))
+        except Exception as err:
+            HandleLogs.write_error(err)
+            return jsonify(response_error("Error en el método: " + str(err)))
 
 class UserCreateService(Resource):
     @staticmethod

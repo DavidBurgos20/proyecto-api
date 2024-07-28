@@ -26,6 +26,27 @@ class MessageComponent:
             return internal_response(result, data, message)
 
     @staticmethod
+    def getMessageById(message_id):
+        try:
+            result = False
+            data = None
+            message = None
+            sql = "SELECT * FROM Mensajes WHERE id = %s"
+            record = (message_id,)
+
+            result_message = DataBaseHandle.getRecords(sql, 1, record)
+            if result_message['result']:
+                result = True
+                data = result_message['data']
+            else:
+                message = 'Error al obtener el mensaje -> ' + result_message['message']
+        except Exception as err:
+            HandleLogs.write_error(err)
+            message = err.__str__()
+        finally:
+            return internal_response(result, data, message)
+
+    @staticmethod
     def insertMessage(remitente_id, destinatario_id, contenido):
         try:
             result = False

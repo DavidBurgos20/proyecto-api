@@ -26,6 +26,27 @@ class UserComponent:
             return internal_response(result, data, message)
 
     @staticmethod
+    def getUserById(user_id):
+        try:
+            result = False
+            data = None
+            message = None
+            sql = "SELECT * FROM Usuarios WHERE id = %s"
+            record = (user_id,)
+
+            result_user = DataBaseHandle.getRecords(sql, 1, record)
+            if result_user['result']:
+                result = True
+                data = result_user['data']
+            else:
+                message = 'Error al obtener datos del usuario -> ' + result_user['message']
+        except Exception as err:
+            HandleLogs.write_error(err)
+            message = err.__str__()
+        finally:
+            return internal_response(result, data, message)
+
+    @staticmethod
     def insertUser(nombre, correo, contraseña, foto, fecha_nacimiento, biografia):
         try:
             result = False

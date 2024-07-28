@@ -26,6 +26,27 @@ class AmigosComponent:
             return internal_response(result, data, message)
 
     @staticmethod
+    def getAmigoById(amigo_id):
+        try:
+            result = False
+            data = None
+            message = None
+            sql = "SELECT * FROM Amigos WHERE id = %s"
+            record = (amigo_id,)
+
+            result_amigo = DataBaseHandle.getRecords(sql, 1, record)
+            if result_amigo['result']:
+                result = True
+                data = result_amigo['data']
+            else:
+                message = 'Error al obtener datos del amigo -> ' + result_amigo['message']
+        except Exception as err:
+            HandleLogs.write_error(err)
+            message = err.__str__()
+        finally:
+            return internal_response(result, data, message)
+
+    @staticmethod
     def insertAmigo(usuario_id_1, usuario_id_2):
         try:
             result = False

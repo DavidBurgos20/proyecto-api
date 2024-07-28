@@ -1,0 +1,4 @@
+15:52:14 - ERR - getMessageById - (AttributeError("type object 'DataBaseHandle' has no attribute 'getRecord'"),)
+15:54:45 - ERR - getRecords - (SyntaxError('error de sintaxis en o cerca de «%»\nLINE 1: SELECT * FROM Mensajes WHERE id = %s\n                                          ^\n'),)
+15:54:56 - ERR - getRecords - (SyntaxError('error de sintaxis en o cerca de «%»\nLINE 1: SELECT * FROM Mensajes WHERE id = %s\n                                          ^\n'),)
+15:55:21 - ERR - getRecords - (SyntaxError('error de sintaxis en o cerca de «%»\nLINE 1: SELECT * FROM Mensajes WHERE id = %s\n                                          ^\n'),)

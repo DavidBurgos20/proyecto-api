@@ -24,6 +24,24 @@ class AmigosListService(Resource):
             HandleLogs.write_error(err)
             return jsonify(response_error("Error en el método: " + str(err)))
 
+class AmigosDetailService(Resource):
+    @staticmethod
+    def get(amigo_id):
+        try:
+            HandleLogs.write_log("Ejecutando servicio de obtener amigo por ID")
+            resultado = AmigosComponent.getAmigoById(amigo_id)
+
+            if resultado['result']:
+                if resultado['data']:
+                    return jsonify(response_success(resultado['data']))
+                else:
+                    return jsonify(response_not_found())
+            else:
+                return jsonify(response_error(resultado['message']))
+        except Exception as err:
+            HandleLogs.write_error(err)
+            return jsonify(response_error("Error en el método: " + str(err)))
+
 class AmigosCreateService(Resource):
     @staticmethod
     def post():

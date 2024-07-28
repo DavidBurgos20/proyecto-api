@@ -23,6 +23,24 @@ class MessageListService(Resource):
             HandleLogs.write_error(err)
             return jsonify(response_error("Error en el método: " + str(err)))
 
+class MessageDetailService(Resource):
+    @staticmethod
+    def get(message_id):
+        try:
+            HandleLogs.write_log("Ejecutando servicio de obtener mensaje por ID")
+            resultado = MessageComponent.getMessageById(message_id)
+
+            if resultado['result']:
+                if resultado['data']:
+                    return jsonify(response_success(resultado['data']))
+                else:
+                    return jsonify(response_not_found())
+            else:
+                return jsonify(response_error(resultado['message']))
+        except Exception as err:
+            HandleLogs.write_error(err)
+            return jsonify(response_error("Error en el método: " + str(err)))
+
 class MessageCreateService(Resource):
     @staticmethod
     def post():

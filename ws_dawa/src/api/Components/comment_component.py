@@ -26,6 +26,27 @@ class CommentComponent:
             return internal_response(result, data, message)
 
     @staticmethod
+    def getCommentById(comment_id):
+        try:
+            result = False
+            data = None
+            message = None
+            sql = "SELECT * FROM Comentarios WHERE id = %s"
+            record = (comment_id,)
+
+            result_comment = DataBaseHandle.getRecords(sql, 1, record)
+            if result_comment['result']:
+                result = True
+                data = result_comment['data']
+            else:
+                message = 'Error al obtener datos del comentario -> ' + result_comment['message']
+        except Exception as err:
+            HandleLogs.write_error(err)
+            message = err.__str__()
+        finally:
+            return internal_response(result, data, message)
+
+    @staticmethod
     def insertComment(usuario_id, post_id, contenido):
         try:
             result = False

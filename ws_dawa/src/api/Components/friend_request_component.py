@@ -26,6 +26,27 @@ class FriendRequestComponent:
             return internal_response(result, data, message)
 
     @staticmethod
+    def getFriendRequestById(request_id):
+        try:
+            result = False
+            data = None
+            message = None
+            sql = "SELECT * FROM Solicitudes_Amistad WHERE id = %s"
+            record = (request_id,)
+
+            result_request = DataBaseHandle.getRecords(sql, 1, record)
+            if result_request['result']:
+                result = True
+                data = result_request['data']
+            else:
+                message = 'Error al obtener datos de la solicitud de amistad -> ' + result_request['message']
+        except Exception as err:
+            HandleLogs.write_error(err)
+            message = err.__str__()
+        finally:
+            return internal_response(result, data, message)
+
+    @staticmethod
     def insertFriendRequest(solicitante_id, solicitado_id):
         try:
             result = False

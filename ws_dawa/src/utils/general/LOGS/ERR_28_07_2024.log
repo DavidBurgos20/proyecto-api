@@ -1,0 +1,6 @@
+12:16:50 - ERR - getPostById - (AttributeError("type object 'DataBaseHandle' has no attribute 'getRecord'"),)
+12:18:21 - ERR - getPostById - (AttributeError("type object 'DataBaseHandle' has no attribute 'getRecord'"),)
+12:18:51 - ERR - getRecords - (SyntaxError('error de sintaxis en o cerca de «%»\nLINE 1: SELECT * FROM Publicaciones WHERE id = %s\n                                               ^\n'),)
+12:21:48 - ERR - getRecords - (SyntaxError('error de sintaxis en o cerca de «%»\nLINE 1: SELECT * FROM Publicaciones WHERE id = %s\n                                               ^\n'),)
+12:53:53 - ERR - getUserById - (AttributeError("type object 'DataBaseHandle' has no attribute 'getRecord'"),)
+12:54:22 - ERR - getRecords - (SyntaxError('error de sintaxis en o cerca de «%»\nLINE 1: SELECT * FROM Usuarios WHERE id = %s\n                                          ^\n'),)

@@ -26,6 +26,27 @@ class PostComponent:
             return internal_response(result, data, message)
 
     @staticmethod
+    def getPostById(post_id):
+        try:
+            result = False
+            data = None
+            message = None
+            sql = "SELECT * FROM Publicaciones WHERE id = %s"
+            record = (post_id,)
+
+            result_post = DataBaseHandle.getRecords(sql, 1, record)
+            if result_post['result']:
+                result = True
+                data = result_post['data']
+            else:
+                message = 'Error al obtener datos de la publicación -> ' + result_post['message']
+        except Exception as err:
+            HandleLogs.write_error(err)
+            message = err.__str__()
+        finally:
+            return internal_response(result, data, message)
+
+    @staticmethod
     def insertPost(usuario_id, contenido):
         try:
             result = False

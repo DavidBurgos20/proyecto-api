@@ -1,4 +1,4 @@
-from flask import request
+
 from flask import request, jsonify
 from flask_restful import Resource
 from ..Components.post_component import PostComponent
@@ -15,6 +15,24 @@ class PostListService(Resource):
 
             if resultado['result']:
                 if len(resultado['data']) > 0:
+                    return jsonify(response_success(resultado['data']))
+                else:
+                    return jsonify(response_not_found())
+            else:
+                return jsonify(response_error(resultado['message']))
+        except Exception as err:
+            HandleLogs.write_error(err)
+            return jsonify(response_error("Error en el método: " + str(err)))
+
+class PostDetailService(Resource):
+    @staticmethod
+    def get(post_id):
+        try:
+            HandleLogs.write_log("Ejecutando servicio de obtener publicación por ID")
+            resultado = PostComponent.getPostById(post_id)
+
+            if resultado['result']:
+                if resultado['data']:
                     return jsonify(response_success(resultado['data']))
                 else:
                     return jsonify(response_not_found())

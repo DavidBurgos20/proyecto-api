@@ -26,6 +26,27 @@ class ReactionComponent:
             return internal_response(result, data, message)
 
     @staticmethod
+    def getReactionById(reaction_id):
+        try:
+            result = False
+            data = None
+            message = None
+            sql = "SELECT * FROM Reacciones WHERE id = %s"
+            record = (reaction_id,)
+
+            result_reaction = DataBaseHandle.getRecords(sql, 1, record)
+            if result_reaction['result']:
+                result = True
+                data = result_reaction['data']
+            else:
+                message = 'Error al obtener datos de la reacción -> ' + result_reaction['message']
+        except Exception as err:
+            HandleLogs.write_error(err)
+            message = err.__str__()
+        finally:
+            return internal_response(result, data, message)
+
+    @staticmethod
     def insertReaction(usuario_id, publicacion_id, tipo_reaccion):
         try:
             result = False

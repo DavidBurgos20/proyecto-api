@@ -26,6 +26,27 @@ class StoryComponent:
             return internal_response(result, data, message)
 
     @staticmethod
+    def getStoryById(story_id):
+        try:
+            result = False
+            data = None
+            message = None
+            sql = "SELECT * FROM Historias WHERE id = %s"
+            record = (story_id,)
+
+            result_story = DataBaseHandle.getRecords(sql, 1, record)
+            if result_story['result']:
+                result = True
+                data = result_story['data']
+            else:
+                message = 'Error al obtener datos de la historia -> ' + result_story['message']
+        except Exception as err:
+            HandleLogs.write_error(err)
+            message = err.__str__()
+        finally:
+            return internal_response(result, data, message)
+
+    @staticmethod
     def insertStory(usuario_id, contenido):
         try:
             result = False

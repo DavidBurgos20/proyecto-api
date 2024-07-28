@@ -23,6 +23,23 @@ class CommentListService(Resource):
             HandleLogs.write_error(err)
             return jsonify(response_error("Error en el método: " + str(err)))
 
+class CommentDetailService(Resource):
+    @staticmethod
+    def get(comment_id):
+        try:
+            HandleLogs.write_log("Ejecutando servicio de obtener comentario por ID")
+            resultado = CommentComponent.getCommentById(comment_id)
+
+            if resultado['result']:
+                if resultado['data']:
+                    return jsonify(response_success(resultado['data']))
+                else:
+                    return jsonify(response_not_found())
+            else:
+                return jsonify(response_error(resultado['message']))
+        except Exception as err:
+            HandleLogs.write_error(err)
+            return jsonify(response_error("Error en el método: " + str(err)))
 
 class CommentCreateService(Resource):
     @staticmethod
